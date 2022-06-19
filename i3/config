@@ -118,17 +118,26 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10" 
 
+#Default Border
+for_window [class="^.*"] border pixel 3
+
 #Specific workspace
-for_window[class="firefox"] move to workspace $ws1
-for_window[class="Spotify"] move to workspace $ws9
+
+for_window [class="firefox"] move to workspace $ws1
+
+#Spotify Container
+for_window [class="Spotify"] move to workspace $ws9, floating enable
+for_window [class="Spotify"] move position 720px 28px, resize set 640px 730px
+
+#PavuControl Container
+for_window [class="Pavucontrol"] move to workspace $ws9, floating enable
+for_window [class="Pavucontrol"] move position 7px 530px resize set 700px 230px
+
+#EasyEffect Container
+for_window [class="easyeffects"] move to workspace $ws9, floating enable
+for_window [class="easyeffects"] move position 7px 30px resize set 698px 480px
+
 assign [class="discord"] $ws10
-for_window[class="Pavucontrol"] move to workspace $ws9
-
-#Border config
-
-default_border pixel 0
-
-hide_edge_borders both
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -185,17 +194,20 @@ mode "resize" {
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
+
 bar {
-	font pango: Fira Code 8
-	status_command i3status
+	font pango: Fira Code 10
+	status_command i3status -c ~/.config/i3/i3status.conf
 	position top
 }
 
 bindsym $mod+r mode "resize"
+
+
 #################################
 
 gaps inner 3
-gaps outer 1
+gaps outer 2
 
 #################################
 #exec --no-startup-id polybar main
@@ -208,10 +220,11 @@ exec --no-startup-id discord
 
 exec --no-startup-id spotify
 
+exec --no-startup-id easyeffects
+
 exec --no-startup-id nitrogen --restore
 
 exec_always --no-startup-id picom &
-
 
 
 # Review the lines below and append to ~/.config/i3/config
