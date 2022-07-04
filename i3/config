@@ -122,20 +122,17 @@ set $ws10 "10"
 for_window [class="^.*"] border pixel 3
 
 #Specific workspace
-
 for_window [class="firefox"] move to workspace $ws1
+for_window [class="Google-chrome"] move to workspace $ws2
 
 #Spotify Container
 for_window [class="Spotify"] move to workspace $ws9, floating enable
-for_window [class="Spotify"] move position 720px 28px, resize set 640px 730px
+for_window [class="Spotify"] move position 550px 28px  
 
 #PavuControl Container
 for_window [class="Pavucontrol"] move to workspace $ws9, floating enable
-for_window [class="Pavucontrol"] move position 7px 530px resize set 700px 230px
-
-#EasyEffect Container
-for_window [class="easyeffects"] move to workspace $ws9, floating enable
-for_window [class="easyeffects"] move position 7px 30px resize set 698px 480px
+for_window [class="Pavucontrol"] move position 7px 30px resize set 500px 730px
+for_window [class="Codium"] move to workspace $ws3
 
 assign [class="discord"] $ws10
 
@@ -199,10 +196,15 @@ bar {
 	font pango: Fira Code 10
 	status_command i3status -c ~/.config/i3/i3status.conf
 	position top
+        colors {
+           statusline #ffffff
+           background #323232
+           inactive_workspace #32323200 #32323200 #5c5c5c
+	}
 }
 
 bindsym $mod+r mode "resize"
-
+bindsym $mod+n exec nautilus
 
 #################################
 
@@ -220,42 +222,8 @@ exec --no-startup-id discord
 
 exec --no-startup-id spotify
 
-exec --no-startup-id easyeffects
+#exec --no-startup-id easyeffects
 
 exec --no-startup-id nitrogen --restore
 
 exec_always --no-startup-id picom &
-
-
-# Review the lines below and append to ~/.config/i3/config
-
-## Volume control
-
-# Path to volume control, without trailing slash
-set $volumepath ~/i3-volume
-
-# Command for the status line
-#   ie: i3blocks, i3status
-set $statuscmd i3status
-
-# Signal used to update the status line
-#   i3blocks uses SIGRTMIN+10 by default
-#   i3status uses SIGUSR1 by default
-set $statussig SIGUSR1
-
-# Amount to increase/decrease volume as a percentage
-set $volumestep 5
-
-# alsa-utils settings
-#
-# To configure a default card, see https://www.alsa-project.org/main/index.php/Asoundrc
-#
-# Card number to control.
-#   If not specified, i3-volume will let `amixer` use a default.
-#   List cards: aplay -l
-#set $alsacard 1
-
-# append "-c $alsacard" without quotes to override default card
-bindsym XF86AudioRaiseVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig up $volumestep
-bindsym XF86AudioLowerVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig down $volumestep
-bindsym XF86AudioMute        exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig mute
